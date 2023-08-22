@@ -3,6 +3,7 @@ package com.example.api_rocket_leaguerefractor.controller;
 import com.example.api_rocket_leaguerefractor.exception.AddException;
 import com.example.api_rocket_leaguerefractor.exception.ModifyException;
 import com.example.api_rocket_leaguerefractor.model.entity.Team;
+import com.example.api_rocket_leaguerefractor.model.entity.dto.TeamAddFormDTO;
 import com.example.api_rocket_leaguerefractor.model.form.TeamForm;
 import com.example.api_rocket_leaguerefractor.service.PlayerService;
 import com.example.api_rocket_leaguerefractor.service.TeamService;
@@ -24,11 +25,12 @@ public class TeamController {
     }
 
     @GetMapping("/teams") // Endpoint pour récupérer la liste des équipes
-    public ResponseEntity<List<Team>> getTeams() {
+    public ResponseEntity<List<TeamAddFormDTO>> getTeams() {
         // Renvoie une réponse avec la liste de toutes les équipes récupérée depuis le service
         List<Team> all = this.teamService.getAll();
-        if (all.isEmpty())
-            return ResponseEntity.ok(all);
+        System.out.println(all.size());
+        if (!all.isEmpty())
+            return ResponseEntity.ok(TeamAddFormDTO.toDTO(all));
         else
             return ResponseEntity.noContent().build();
     }

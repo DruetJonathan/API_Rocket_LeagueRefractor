@@ -25,8 +25,8 @@ public class Player {
 
     private Plateforms plateform; // Plateforme à laquelle le joueur appartient
 
-    @OneToMany(cascade = CascadeType.ALL) // Permet de mettre à jour les stats lorsqu'elles sont mises à jour pour le joueur
-    private List<Stat> stats = new ArrayList<>(); // Liste pour stocker l'historique des stats
+    @ElementCollection // Permet de mettre à jour les stats lorsqu'elles sont mises à jour pour le joueur
+    private List<Stat> stats; // Liste pour stocker l'historique des stats
 
 
     @ManyToOne // Relation Many-to-One avec la classe Team, indiquant qu'un joueur appartient à une équipe
