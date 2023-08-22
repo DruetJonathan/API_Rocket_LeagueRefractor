@@ -1,5 +1,6 @@
 package com.example.api_rocket_leaguerefractor.model.entity;
 
+import com.example.api_rocket_leaguerefractor.model.entity.dto.PlayerSeeAllDTO;
 import com.example.api_rocket_leaguerefractor.model.entity.enums.Plateforms;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,4 +34,14 @@ public class Player {
     @JoinColumn(name = "team_id") // Colonne dans la table Players qui stockera la clé étrangère vers l'équipe
     @JsonIgnore // Ignorer cette propriété lors de la sérialisation JSON pour éviter des références cycliques
     private Team team; // L'équipe à laquelle le joueur appartient
+
+    public static PlayerSeeAllDTO toDto(Player player) {
+        PlayerSeeAllDTO playerSeeAllDTO = new PlayerSeeAllDTO();
+        playerSeeAllDTO.setId(player.getId());
+        playerSeeAllDTO.setPseudo(player.getPseudo());
+        playerSeeAllDTO.setPlateform(player.getPlateform());
+        playerSeeAllDTO.setRanks(player.getRanks());
+        playerSeeAllDTO.setTeamId(player.getTeam().getId());
+        return playerSeeAllDTO;
+    }
 }

@@ -3,6 +3,7 @@ package com.example.api_rocket_leaguerefractor.controller;
 import com.example.api_rocket_leaguerefractor.exception.AddException;
 import com.example.api_rocket_leaguerefractor.exception.ModifyException;
 import com.example.api_rocket_leaguerefractor.model.entity.Player;
+import com.example.api_rocket_leaguerefractor.model.entity.dto.PlayerSeeAllDTO;
 import com.example.api_rocket_leaguerefractor.model.form.PlayerAddForm;
 import com.example.api_rocket_leaguerefractor.service.PlayerService;
 import com.example.api_rocket_leaguerefractor.service.TeamService;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // Permet les requêtes cross-origin
@@ -36,11 +38,17 @@ public class PlayerController {
     }
 
     // Point de terminaison pour obtenir la liste de tous les joueurs
-    @RequestMapping("/players")
+    @RequestMapping("/players/see")
     public ResponseEntity<List<Player>> getPlayers() {
         List<Player> all = this.playerService.getAll();
+        List<PlayerSeeAllDTO> allDTOS = new ArrayList<>();
+        for (int i = 0; i < all.size()-1; i++) {
+            allDTOS.add(Player.toDto(all.get(i)));
+            System.out.println(allDTOS.get(i).toString());
+        }
         if (!all.isEmpty()) {
             // Retourne une réponse avec le code 200 (OK) et la liste de joueurs
+
             return ResponseEntity.status(200).body(all);
         } else {
             // Retourne une réponse avec le code 204 (No Content) car la liste est vide
