@@ -99,7 +99,7 @@ public class PlayerController {
                 return ResponseEntity.ok(add);
             } else {
                 // Retourne une réponse avec le code 500 (Internal Server Error) en cas d'erreur interne
-                return ResponseEntity.internalServerError().build();
+                return ResponseEntity.notFound().build();
             }
         } catch (AddException addException) {
             // Retourne une réponse avec le code 400 (Bad Request) en cas d'erreur d'ajout
