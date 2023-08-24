@@ -46,10 +46,10 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional // Indique que cette méthode est transactionnelle
-    public boolean delete(Long id) {
+    public boolean delete(Player player) {
         try {
             // Supprime un joueur de la base de données par son ID, en cas d'échec, lance une exception personnalisée
-            this.playerRepository.deleteById(id);
+            this.playerRepository.delete(player);
         } catch (DeletionFailedException e) {
             throw new DeletionFailedException("Fail delete");
         }

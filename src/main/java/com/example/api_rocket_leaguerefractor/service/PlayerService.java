@@ -10,7 +10,7 @@ public interface PlayerService {
     Player getById(Long id);
     Player add(Player player);
     Player modify(Player player);
-    boolean delete(Long id);
+    boolean delete(Player player);
     List<Player> getAllPlayersById(Long[] ids);
 
 }

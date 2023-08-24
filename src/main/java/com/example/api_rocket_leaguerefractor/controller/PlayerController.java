@@ -110,7 +110,9 @@ public class PlayerController {
     // Point de terminaison pour supprimer un joueur par son ID
     @DeleteMapping("/player/delete/{id}")
     public ResponseEntity<Boolean> deletePlayer(@PathVariable Long id) {
-        boolean delete = this.playerService.delete(id);
+        Player byId = playerService.getById(id);
+        boolean delete = this.playerService.delete(byId);
+
         if (delete) {
             // Retourne une réponse avec le code 200 (OK) en cas de suppression réussie
             return ResponseEntity.ok(true);
