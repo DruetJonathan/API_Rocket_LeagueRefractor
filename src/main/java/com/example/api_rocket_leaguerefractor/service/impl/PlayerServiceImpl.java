@@ -34,7 +34,11 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player modify(Player player) {
-        return this.playerRepository.save(player);
+        Player byId = getById(player.getId());
+        if (byId != null){
+            return this.playerRepository.save(player);
+        }
+        throw new RessourceNotFoundException("player",player.getId());
     }
 
     @Override

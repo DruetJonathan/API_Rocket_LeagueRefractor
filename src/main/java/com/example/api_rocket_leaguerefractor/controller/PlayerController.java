@@ -60,51 +60,24 @@ public class PlayerController {
     @GetMapping("/player/{id}")
     public ResponseEntity<Player> getPlayer(@PathVariable Long id) {
         Player player = playerService.getById(id);
-        if (player != null) {
-            // Retourne une réponse avec le code 200 (OK) et les détails du joueur
+
             return ResponseEntity.ok(player);
-        } else {
-            // Retourne une réponse avec le code 404 (Not Found) car le joueur n'existe pas
-            return ResponseEntity.notFound().build();
-        }
     }
 
     // Point de terminaison pour modifier les détails d'un joueur par son ID
-    @PostMapping("/player/modify/{id}")
+    @PutMapping("/player/modify/{id}")
     public ResponseEntity<Player> updatePlayer(@RequestBody @Valid PlayerAddForm playerDTO, @PathVariable Long id) {
-        try {
             Player modify = this.playerService.modify(playerDTO.toEntity());
-            if (modify != null) {
-                // Retourne une réponse avec le code 200 (OK) et les détails du joueur modifié
-                return ResponseEntity.ok(modify);
-            } else {
-                // Retourne une réponse avec le code 404 (Not Found) car le joueur n'a pas pu être modifié
-                return ResponseEntity.notFound().build();
-            }
-        } catch (ModifyException e) {
-            // Retourne une réponse avec le code 400 (Bad Request) en cas d'erreur de modification
-            return ResponseEntity.badRequest().build();
-        }
+            return ResponseEntity.ok(modify);
     }
 
     // Point de terminaison pour ajouter un nouveau joueur
     @PostMapping("/player/add")
     public ResponseEntity<Player> addPlayer(@RequestBody @Valid PlayerAddForm toAdd) {
-        try {
             Player player = toAdd.toEntity();
             player.setTeam(teamService.getById(toAdd.getTeamId()));
             Player add = this.playerService.add(player);
-            if (add != null) {
-                // Retourne une réponse avec le code 200 (OK) et les détails du joueur ajouté
-                return ResponseEntity.ok(add);
-            } else {
-                // Retourne une réponse avec le code 500 (Internal Server Error) en cas d'erreur interne
-                return ResponseEntity.notFound().build();
-            }
-        } catch (AddException addException) {
-            // Retourne une réponse avec le code 400 (Bad Request) en cas d'erreur d'ajout
-            return ResponseEntity.badRequest().build();
-        }
+            return ResponseEntity.ok(add);
     }
 
     // Point de terminaison pour supprimer un joueur par son ID
@@ -112,13 +85,6 @@ public class PlayerController {
     public ResponseEntity<Boolean> deletePlayer(@PathVariable Long id) {
         Player byId = playerService.getById(id);
         boolean delete = this.playerService.delete(byId);
-
-        if (delete) {
-            // Retourne une réponse avec le code 200 (OK) en cas de suppression réussie
-            return ResponseEntity.ok(true);
-        } else {
-            // Retourne une réponse avec le code 500 (Internal Server Error) en cas d'erreur interne
-            return ResponseEntity.internalServerError().build();
-        }
+        return ResponseEntity.ok(true);
     }
 }
